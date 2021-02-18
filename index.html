@@ -1,7 +1,405 @@
 <!DOCTYPE html>
 <html>
 <body>
-<h1>Hello World</h1>
+<h1>
+    @prefix odrl:   <http://www.w3.org/ns/odrl/2/> .
+    @prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+    @prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+    @prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+    @prefix owl:    <http://www.w3.org/2002/07/owl#> .
+    @prefix dct:    <http://purl.org/dc/terms/> .
+    @prefix lic:    <http://ontology-policy-license/licenses> .
+    @prefix opl:    <https://ritamargherita.github.io> .
+    
+    
+    opl:
+            a                   owl:Ontology ;
+            rdfs:label          "OPL Version 0.1"@en ;
+            owl:versionInfo     "0.1" ;
+            dct:creator         "Margherita Martorana" ;
+            dct:description     "OPL Ontology"@en ;
+            rdfs:comment        "RDF ontology for OPL Version 0.1"@en .
+
+    lic:
+            a                   owl:Ontology ;
+            rdfs:label          "LIC Version 0.1"@en ;
+            owl:versionInfo     "0.1" ;
+            dct:creator         "Margherita Martorana" ;
+            dct:description     "License Ontology"@en ;
+            rdfs:comment        "RDF ontology for LIC Version 0.1"@en .            
+    
+    
+    ## Access
+    
+    opl:AccessibilityTerm
+            a rdfs:Class, owl:Class, skos:Concept ;
+            rdfs:isDefinedBy opl: ;
+            rdfs:label "Access"@en ;
+            skos:definition "A non-empty group of Accessibility Term."@en ;
+            skos:note "A Policy must contain an Accessibility Term."@en .
+    
+    opl:hasAccess
+            a rdf:Property, owl:ObjectProperty, skos:Concept ;
+            rdfs:isDefinedBy opl: ;
+            rdfs:label "Target Access"@en ;
+            skos:definition "Identifies an OPL Accessibility Term Policy for which the identified Asset is the target Asset."@en ;
+            skos:note "The Asset being identified MUST be inferred to be the target Asset of the Accesibility Term."@en ;
+            rdfs:domain odrl:Asset ;
+            rdfs:range opl:AccessibilityTerm .
+    
+    opl:requestAccess       
+            a rdf:Property, owl:ObjectProperty, skos:Concept ;
+            rdfs:isDefinedBy opl: ;
+            rdfs:label "Request Access"@en ;
+            skos:definition "Define details on how access can be requested for not Accessible Assets."@en ;
+            skos:note "The Asset being identified MUST be inferred to be the target Asset of the request Access."@en ;
+            rdfs:domain odrl:Asset .        
+    
+    
+    ## Collective Vocabulary
+    
+    opl:NonEndorsement      
+            a odrl:Action, skos:concept ;
+            rdfs:isDefinedBy odrl: ;
+            rdfs:label "Non-Endorsement"@en ;
+            skos:definition "Clause that prohibit the use of the Asset's name or Asset Owner's name in promotion."@en ;
+            odrl:includedIn odrl:use ;
+            skos:scopeNote "Non-Normative"@en .    
+    
+    opl:AcademicUse
+            a odrl:Action, skos:Concept ;
+            rdfs:isDefinedBy opl: ;
+            rdfs:label "Academic Use"@en ;
+            skos:definition "Exercising rights for teaching/research purposes."@en ;
+            skos:note "This term is defined by OPL."@en ;
+            odrl:includedIn odrl:use ;
+            skos:scopeNote "Non-Normative"@en .       
+    
+    opl:PrivateUse
+            a odrl:Action, skos:Concept ;
+            rdfs:isDefinedBy opl: ;
+            rdfs:label "Private Use"@en ;
+            skos:definition "Exercising rights for private purposes."@en ;
+            skos:note "This term is defined by OPL."@en ;
+            odrl:includedIn odrl:use ;
+            skos:scopeNote "Non-Normative"@en .   
+    
+    opl:Accessible
+            a odrl:AccessibilityTerm, skos:Concept ;
+            rdfs:isDefinedBy opl: ;
+            rdfs:label "Accessibile"@en ;
+            skos:definition "Defines that the Asset is Accessible."@en ;
+            skos:note "This term is defined by OPL."@en .  
+    
+    opl:AccessibleWithRegistration
+            a odrl:AccessibilityTerm, skos:Concept ;
+            rdfs:isDefinedBy opl: ;
+            rdfs:label "Accessibile with Registration"@en ;
+            skos:definition "Defines that the Asset is Accessible with Registration."@en ;
+            skos:note "This term is defined by OPL."@en .  
+    
+    opl:Restricted
+            a odrl:AccessibilityTerm, skos:Concept ;
+            rdfs:isDefinedBy opl: ;
+            rdfs:label "Restricted"@en ;
+            skos:definition "Defines that the Asset is Restricted."@en ;
+            skos:note "This term is defined by OPL."@en .  
+    
+    opl:OtherAccess
+            a odrl:AccessibilityTerm, skos:Concept ;
+            rdfs:isDefinedBy opl: ;
+            rdfs:label "Other Access"@en ;
+            skos:definition "Defines that the Asset is Accessible through another provider."@en ;
+            skos:note "This term is defined by OPL."@en .   
+    
+
+    # licenses
+
+    lic:cc0             
+            a                   odrl:Policy ;
+            odrl:version        "1.0" ;
+            odrl:uid            "CC0-1.0" ;
+            odrl:source         "http://creativecommons.org/publicdomain/zero/1.0" ;
+            odrl:permission     cc:DerivativeWorks,
+                                cc:Reproduction,
+                                cc:Distribution,
+                                cc:CommericalUse,
+                                opl:AcademicUse,
+                                opl:PrivateUse .
+
+    lic:ccBy            
+            a                   odrl:Policy ;
+            odrl:version        "4.0" ;
+            odrl:uid            "CC-BY-4.0" ;
+            odrl:source         "http://creativecommons.org/licenses/by/4.0" ;
+            odrl:permission     cc:Reproduction,
+                                cc:Distribution,
+                                cc:DerivativeWorks,
+                                cc:CommericalUse,
+                                opl:AcademicUse,
+                                opl:PrivateUse ;
+            odrl:obligation     cc:Notice,
+                                cc:Attribution .
+
+    lic:ccBySa          
+            a                   odrl:Policy ;
+            odrl:version        "4.0" ;
+            odrl:uid            "CC-BY-SA-4.0" ;
+            odrl:source         "http://creativecommons.org/licenses/by-sa/4.0/" ;
+            odrl:permission     cc:Reproduction,
+                                cc:Distribution,
+                                cc:DerivativeWorks,
+                                cc:CommericalUse,
+                                opl:AcademicUse,
+                                opl:PrivateUse ;
+            odrl:obligation     cc:Notice,
+                                cc:Attribution,
+                                cc:ShareAlike .
+
+    lic:ccByNc          
+            a                   odrl:Policy ;
+            odrl:version        "4.0" ,
+                                "3.0" ;
+            odrl:uid            "CC-BY-NC-4.0",
+                                "CC-BY-NC-3.0" ;
+            odrl:source         "http://creativecommons.org/licenses/by-nc/4.0/",
+                                "http://creativecommons.org/licenses/by-nc/3.0" ;
+            odrl:permission     cc:Reproduction,
+                                cc:Distribution,
+                                cc:DerivativeWorks,
+                                opl:AcademicUse,
+                                opl:PrivateUse ;
+            odrl:obligation     cc:Notice,
+                                cc:Attribution ;
+            odrl:prohibition    cc:CommericalUse .                    
+
+    lic:ccByNd          
+            a                   odrl:Policy ;
+            odrl:version        "4.0" ;
+            odrl:uid            "CC-BY-ND-4.0" ;
+            odrl:source         "http://creativecommons.org/licenses/by-nd/4.0/" ;
+            odrl:permission     cc:Reproduction,
+                                cc:Distribution,
+                                cc:CommericalUse,
+                                opl:AcademicUse,
+                                opl:PrivateUse ;
+            odrl:obligation     cc:Notice,
+                                cc:Attribution ;
+            odrl:prohibition    cc:DerivativeWorks .    
+
+    lic:ccByNcNd        
+            a                   odrl:Policy ;
+            odrl:version        "4.0" ;
+            odrl:uid            "CC-BY-NC-ND-4.0" ;
+            odrl:source         "http://creativecommons.org/licenses/by-nc-nd/4.0/" ;
+            odrl:permission     cc:Reproduction,
+                                cc:Distribution,
+                                opl:AcademicUse,
+                                opl:PrivateUse ;
+            odrl:obligation     cc:Notice,
+                                cc:Attribution;
+            odrl:prohibition    cc:CommericalUse,
+                                cc:DerivativeWorks .  
+
+    lic:ccByNcSa        
+            a                   odrl:Policy ;
+            odrl:version        "4.0",
+                                "3.0" ;
+            odrl:uid            "CC-BY-NC-SA-4.0",
+                                "CC-BY-NC-SA-3.0" ;
+            odrl:source         "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+                                "http://creativecommons.org/licenses/by-nc-sa/3.0" ;
+            odrl:permission     cc:Reproduction,
+                                cc:Distribution,
+                                cc:DerivativeWorks,
+                                opl:AcademicUse,
+                                opl:PrivateUse ;
+            odrl:obligation     cc:Notice,
+                                cc:Attribution,
+                                cc:ShareAlike ;
+            odrl:prohibition    cc:CommericalUse . 
+
+    lic:bsd2Clause      
+            a                   odrl:Policy ;
+            odrl:uid            "BSD-2-Clause" ;
+            odrl:source         "http://opensource.org/licenses/BSD-2-Clause" ;
+            odrl:permission     cc:Reproduction,
+                                cc:Distribution,
+                                cc:DerivativeWorks,
+                                cc:CommericalUse,
+                                opl:AcademicUse,
+                                opl:PrivateUse ;
+            odrl:obligation     cc:Notice .
+
+    lic:bsd3Clause      
+            a                   odrl:Policy ;
+            odrl:uid            "BSD-3-Clause" ;
+            odrl:source         "http://opensource.org/licenses/BSD-3-Clause" ;
+            odrl:permission     cc:Reproduction,
+                                cc:Distribution,
+                                cc:DerivativeWorks,
+                                cc:CommericalUse,
+                                opl:AcademicUse,
+                                opl:PrivateUse ;
+            odrl:obligation     cc:Notice ,
+                                opl:NonEndorsement .
+
+    lic:mit             
+            a                   odrl:Policy ;
+            odrl:uid            "MIT" ;
+            odrl:source         "http://opensource.org/licenses/MIT" ;
+            odrl:permission     cc:Reproduction,
+                                cc:Distribution,
+                                cc:DerivativeWorks,
+                                cc:CommericalUse,
+                                opl:AcademicUse,
+                                opl:PrivateUse ;
+            odrl:obligation     cc:Notice .
+
+    lic:apache          
+            a                   odrl:Policy ;
+            odrl:version        "2.0" ;
+            odrl:uid            "Apache-2.0" ;
+            odrl:source         "http://www.apache.org/licenses/LICENSE-2.0" ;
+            odrl:permission     cc:Reproduction,
+                                cc:Distribution,
+                                cc:DerivativeWorks,
+                                cc:CommericalUse,
+                                opl:AcademicUse,
+                                opl:PrivateUse ;
+            odrl:obligation     cc:Notice,
+                                cc:Attribution .
+
+    lic:ceCill          
+            a                   odrl:Policy ;
+            odrl:version        "2.0" ;
+            odrl:uid            "CeCILL-Free-2.0" ;
+            odrl:source         "https://cecill.info/licences/Licence_CeCILL_V2-en.html" ;
+            odrl:permission     cc:Reproduction,
+                                cc:Distribution,
+                                cc:DerivativeWorks,
+                                cc:CommericalUse,
+                                opl:AcademicUse,
+                                opl:PrivateUse ;
+            odrl:obligation     cc:Notice,
+                                cc:Attribution .
+
+    lic:ceCillB         
+            a                   odrl:Policy ;
+            odrl:version        "1.0" ;
+            odrl:uid            "CeCILL-B-1.0" ;
+            odrl:source         "https://cecill.info/licences/Licence_CeCILL-B_V1-en.html" ;
+            odrl:permission     cc:Reproduction,
+                                cc:Distribution,
+                                cc:DerivativeWorks,
+                                cc:CommericalUse,
+                                opl:AcademicUse,
+                                opl:PrivateUse ;
+            odrl:obligation     cc:Notice,
+                                cc:Attribution .
+
+    lic:gpl             
+            a                   odrl:Policy ;
+            odrl:version        "2.0",
+                                "3.0" ;
+            odrl:uid            "GPL-2.0",
+                                "GPL-3.0" ;
+            odrl:source         "http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html",
+                                "http://www.gnu.org/licenses/gpl-3.0.en.html" ;
+            odrl:permission     cc:Reproduction,
+                                cc:Distribution,
+                                cc:DerivativeWorks,
+                                cc:CommericalUse,
+                                opl:AcademicUse,
+                                opl:PrivateUse ;
+            odrl:obligation     cc:Notice,
+                                cc:ShareAlike,
+                                cc:SourceCode .
+
+    lic:lgpl            
+            a                   odrl:Policy ;
+            odrl:version        "3.0" ;
+            odrl:uid            "LGPL-3.0" ;
+            odrl:source         "http://www.gnu.org/licenses/lgpl-3.0.txt" ;
+            odrl:permission     cc:Reproduction,
+                                cc:Distribution,
+                                cc:DerivativeWorks,
+                                cc:CommericalUse,
+                                opl:AcademicUse,
+                                opl:PrivateUse ;
+            odrl:obligation     cc:Notice,
+                                cc:ShareAlike,
+                                cc:SourceCode .
+
+    lic:mpl             
+            a                   odrl:Policy ;
+            odrl:version        "2.0" ;
+            odrl:uid            "MPL-2.0" ;
+            odrl:source         "http://www.mozilla.org/en-US/MPL/2.0/FAQ/" ;
+            odrl:permission     cc:Reproduction,
+                                cc:Distribution,
+                                cc:DerivativeWorks,
+                                cc:CommericalUse,
+                                opl:AcademicUse,
+                                opl:PrivateUse ;
+            odrl:obligation     cc:SourceCode,
+                                cc:Attribution .
+
+    lic:cernOhl         
+            a                   odrl:Policy ;
+            odrl:version        "1.1" ;
+            odrl:uid            "CERN-OHL-1.1" ;
+            odrl:source         "http://www.ohwr.org/attachments/735/CERNOHLv1_1.txt" ;
+            odrl:permission     cc:Reproduction,
+                                cc:Distribution,
+                                cc:DerivativeWorks,
+                                cc:CommericalUse,
+                                opl:AcademicUse,
+                                opl:PrivateUse ;
+            odrl:obligation     cc:Notice,
+                                cc:Attribution .
+
+    lic:cernOhl         
+            a                   odrl:Policy ;
+            odrl:version        "1.2" ;
+            odrl:uid            "CERN-OHL-1.2" ;
+            odrl:source         "http://www.ohwr.org/attachments/2388/cern_ohl_v_1_2.txt" ;
+            odrl:permission     cc:Reproduction,
+                                cc:Distribution,
+                                cc:DerivativeWorks,
+                                cc:CommericalUse,
+                                opl:AcademicUse,
+                                opl:PrivateUse ;
+            odrl:obligation     cc:Notice,
+                                cc:Attribution,
+                                opl:NonEndorsement .
+
+    lic:taprOhl         
+            a                   odrl:Policy ;
+            odrl:version        "1.0" ;
+            odrl:uid            "TAPR-OHL-1.0" ;
+            odrl:source         "http://www.tapr.org/ohl.html" ;
+            odrl:permission     cc:Reproduction,
+                                cc:Distribution,
+                                cc:DerivativeWorks,
+                                cc:CommericalUse,
+                                opl:AcademicUse,
+                                opl:PrivateUse ;
+            odrl:obligation     cc:Notice,
+                                cc:Attribution .                    
+
+    lic:dansLicense     
+            a                   opl:License ;
+            opl:legalTerms      "https://dans.knaw.nl/en/about/organisation-and-policy/legal-information/daNSLicence.pdf" ;
+            opl:uid             "3" ;
+            opl:permits         opl:publishing,
+                                opl:derivative,
+                                opl:academicUse ;
+            opl:prohibits       opl:distribution,
+                                opl:commercialUse,
+                                opl:privateUse .
+
+</h1>
 <p>I'm hosted with GitHub Pages.</p>
 </body>
 </html>
