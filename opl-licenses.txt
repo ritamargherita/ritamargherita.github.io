@@ -1,7 +1,7 @@
 @prefix lic:    <http://ontology-policy-license/licenses> .
 @prefix opl:    <http://ontology-policy-license> .
 @prefix cc:     <http://creativecommons.org/ns#> .
-@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix odrl:   <http://www.w3.org/ns/odrl/2/> .
 
 
 lic:cc0             a                   odrl:Policy ;
